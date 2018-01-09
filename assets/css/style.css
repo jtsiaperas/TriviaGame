@@ -1,0 +1,15 @@
+h1,h3 {
+	line-height: 200%;
+}
+
+li {
+	display: inline-block;
+}
+
+.text-left{
+	float: left;
+}
+
+.text-right{
+	float: right;
+}
