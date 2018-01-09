@@ -13,3 +13,7 @@ li {
 .text-right{
 	float: right;
 }
+
+.floater{
+	visibility: hidden;
+}
