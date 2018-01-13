@@ -39,6 +39,18 @@ question = new Question("How many Saved By the Bell novels are there?","21","25"
 questions.push(question);
 question = new Question("Who played the character Screech?","Lou Diamond Phillips","Dennis Haskins","Jessie Spanowski","Dustin Diamond","d");
 questions.push(question);
+question = new Question("The actor who played Max was also a: ","doctor","stunt man","magician","teacher","c");
+questions.push(question);
+question = new Question("What years did Saved By the Bell air?","1988-1992","1989-1993","1985-1990","1989-1994","b");
+questions.push(question);
+question = new Question("How many seasons of the show were there?","3","5","4","6","c");
+questions.push(question);
+question = new Question("What was Zack's signature catch phrase?","Time Out","Hold It","Whoah There","Freeze","a");
+questions.push(question);
+question = new Question("Which character was not part of The College Years' main cast?","Zack","Slater","Screech","Lisa","d");
+questions.push(question);
+question = new Question("Which character was Elizabeth Berkley initially up for?","Lisa","Jessie","Kelly","Karen","c");
+questions.push(question);
 
 $(document).ready(function(){
 var interval;
