@@ -14,7 +14,6 @@ function Game(questions){
 
 function Timer(length){
         this.intervalId;
-        this.timeUp = false;
         this.active = false;
         this.time = length;
         this.length = length;
@@ -32,9 +31,13 @@ function Question(text,a,b,c,d,answer)
 	this.d = d;
     this.answer = answer;
 }
-var question = new Question("What is my name?","Austin","Steve","Jack","Fish","a");
+var question = new Question("Saved By the Bell was a reboot of what show?","The Wonderful Years","Hanging With Mr. Belvidere","Good Morning, Miss Bliss","The Days of Our Lives","c");
 questions.push(question);
-question = new Question("What is the point?","to win","to lose","asdf","afsf","a");
+question = new Question("Which of the following is not a Saved By the Bell spin-off or movie?","Hawaiian Style","The College Years","Wedding in Las Vegas","Bayside on the Wayside","d");
+questions.push(question);
+question = new Question("How many Saved By the Bell novels are there?","21","25","11","37","a");
+questions.push(question);
+question = new Question("Who played the character Screech?","Lou Diamond Phillips","Dennis Haskins","Jessie Spanowski","Dustin Diamond","d");
 questions.push(question);
 
 $(document).ready(function(){
@@ -59,15 +62,39 @@ Timer.prototype.count = function(){
             }
             else
             {
-                timer.timeUp = true;
+                
                 timer.stop();
+                var question = questions[number];
+                console.log(question);
+                var answer = question.answer;
+                var answerText = question[answer];
+                $("#floater").text("Sorry, you're out of time.\n The correct answer is "+answer+": "+answerText);
+                newGame.incorrect++;
+                number++;
+                if (number < questions.length)
+                {
+                   setTimeout(function(){
+                   $("#floater").text("");
+                   $("#timer").html("");
+                   timer.reset();
+                   newGame.draw(questions[number]);
+                   timer.start();
+                   },5000);
+                }
+                else
+                {
+                   setTimeout(function(){ 
+                   $("#floater").text("Game over!\nCorrect Answers: "+newGame.correct+"\nIncorrect Answers: "+newGame.incorrect);
+                   $("#button").html("<button id='restart'>Play Again!</button>");
+                   },5000);
+                }
+
             }
             $("#seconds").text(timer.time);
             
         };
 
 Timer.prototype.reset = function(){
-        timer.timeUp = false;
         timer.active = false;
         timer.time = timer.length;
         console.log(timer);
@@ -83,6 +110,7 @@ Timer.prototype.stop = function(){
     newGame.draw(questions[number]);
     timer.start();
 
+    
 $(".answer").on("click", function(){
     var choice = $(this).attr("id");
     var question = questions[number];
@@ -101,7 +129,7 @@ $(".answer").on("click", function(){
         $("#floater").text("That is correct. The answer is "+answer+": "+answerText);
         newGame.correct++;
     }
-    clicked = true;
+   
     number++;
     if (number < questions.length)
     {
@@ -115,7 +143,7 @@ $(".answer").on("click", function(){
     }
     else
     {
-        $("#floater").text("Game over!\nCorrect Answers: "+newGame.correct+"\nIncorrect Answers: "+newGame.incorrect);
+        $("#floater").text("Game over! Correct Answers: "+newGame.correct+" Incorrect Answers: "+newGame.incorrect);
         $("#button").html("<button id='restart'>Play Again!</button>");
     }
 });
@@ -131,7 +159,7 @@ $("#button").on("click", function(){
     $("#button").html("");
     timer.start();
     newGame.draw(questions[number]);
-});
+ });
 
 });
 

@@ -7,23 +7,41 @@ h1,h3 {
 }
 
 header {
+	height: 14vh;
+}
+
+#header {
 	background-color: #fc7e00;
 	color: #fccd00;
     overflow: hidden;
 }
 
-footer {
+#footer,#floater,#button{
 	background-color: #fc7e00;
 	color: #fccd00;
     overflow: hidden;
 }
+button{
+	border: none;
+	background-color: inherit;
+	color: inherit;
+	width: 40%;
+}
 
+button:hover {
+	background-color: #00effc;
+}
 #question, #timer {
 	background-color: #fccd00;
 }
 
 body {
 	background-color: #fc008e;
+}
+
+.hidden-sm-down{
+	margin: -10px;
+	padding: -10px;
 }
 .answer{
 	background-color: #00effc;
