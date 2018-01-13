@@ -2,22 +2,22 @@ function Game(questions){
 	this.questions = questions;
 	this.correct = 0;
 	this.incorrect = 0;
-	this.draw = function(question){
-		$("#question").text(question.text);
-		$("#a").text(question.a);
-		$("#b").text(question.b);
-		$("#c").text(question.c);
-		$("#d").text(question.d);
+   	this.draw = function(question){
+		$("#question").html("<h3>"+question.text+"</h3>");
+		$("#a").html("<h3>"+question.a+"</h3>");
+		$("#b").html("<h3>"+question.b+"</h3>");
+		$("#c").html("<h3>"+question.c+"</h3>");
+		$("#d").html("<h3>"+question.d+"</h3>");
 	}
 	
 }
 
-function Timer(length,game,number){
+function Timer(length){
         this.intervalId;
         this.timeUp = false;
         this.active = false;
         this.time = length;
-        this.number = number;
+        this.length = length;
 }
 
 var questions = [];
@@ -34,24 +34,25 @@ function Question(text,a,b,c,d,answer)
 }
 var question = new Question("What is my name?","Austin","Steve","Jack","Fish","a");
 questions.push(question);
+question = new Question("What is the point?","to win","to lose","asdf","afsf","a");
+questions.push(question);
 
 $(document).ready(function(){
 var interval;
 var newGame = new Game(questions);
-var timer = new Timer(30,newGame,0);
+var timer = new Timer(30);
+var number = 0;
 Timer.prototype.start = function(){
             
             if(!timer.active)
             {                
-                timer.intervalId = setInterval(timer.count,1000);
+                timer.interval = setInterval(timer.count,1000);
                 timer.active = true;
+                $("#timer").html("<h3>There are <span id='seconds'>"+timer.length+"</span> seconds remaining!</h3>");
             }
         };
 Timer.prototype.count = function(){
-            newGame.draw(newGame.questions[timer.number]);
-            $("#seconds").text(timer.time);
-            console.log(timer.time);
-
+            
             if (timer.time>0)
             {
                 timer.time--;
@@ -61,34 +62,76 @@ Timer.prototype.count = function(){
                 timer.timeUp = true;
                 timer.stop();
             }
+            $("#seconds").text(timer.time);
+            
         };
 
 Timer.prototype.reset = function(){
-            timer.timeUp = false;
-            timer.active = false;
-            timer.time = length;
-        };
+        timer.timeUp = false;
+        timer.active = false;
+        timer.time = timer.length;
+        console.log(timer);
+};
 Timer.prototype.stop = function(){
             if(timer.active)
             {   
-                clearInterval(timer.intervalId);
+                clearInterval(timer.interval);
                 timer.active = false;
             }
         };
-timer.start();
+
+    newGame.draw(questions[number]);
+    timer.start();
 
 $(".answer").on("click", function(){
     var choice = $(this).attr("id");
-    console.log(choice);
-    if (choice != questions[timer.number].answer)
+    var question = questions[number];
+    console.log(question);
+    var answer = question.answer;
+    var answerText = question[answer];
+    timer.stop();
+    if (choice != answer)
     {
-       alert("wrong!");
+        
+        $("#floater").text("That is incorrect. The correct answer is "+answer+": "+answerText);
+        newGame.incorrect++;
     }
     else
     {
-       alert("right!");
+        $("#floater").text("That is correct. The answer is "+answer+": "+answerText);
+        newGame.correct++;
     }
+    clicked = true;
+    number++;
+    if (number < questions.length)
+    {
+        setTimeout(function(){
+        $("#floater").text("");
+        $("#timer").html("");
+        timer.reset();
+        newGame.draw(questions[number]);
+        timer.start();
+        },5000);
+    }
+    else
+    {
+        $("#floater").text("Game over!\nCorrect Answers: "+newGame.correct+"\nIncorrect Answers: "+newGame.incorrect);
+        $("#button").html("<button id='restart'>Play Again!</button>");
+    }
+});
 
-})
+$("#button").on("click", function(){
+    newGame = new Game(questions);
+    number = 0;
+    newGame.correct = 0;
+    newGame.incorrect = 0;
+    timer.stop();
+    timer.reset();
+    $("#floater").text("");
+    $("#button").html("");
+    timer.start();
+    newGame.draw(questions[number]);
+});
+
 });
 

@@ -1,19 +1,37 @@
+* {
+	color: #fc7e00;
+}
+
 h1,h3 {
 	line-height: 200%;
 }
 
-li {
-	display: inline-block;
+header {
+	background-color: #fc7e00;
+	color: #fccd00;
+    overflow: hidden;
 }
 
-.text-left{
-	float: left;
+footer {
+	background-color: #fc7e00;
+	color: #fccd00;
+    overflow: hidden;
 }
 
-.text-right{
-	float: right;
+#question, #timer {
+	background-color: #fccd00;
 }
 
-.floater{
-	visibility: hidden;
+body {
+	background-color: #fc008e;
+}
+.answer{
+	background-color: #00effc;
+}
+.answer:hover{
+	background-color: #fccd00;
+}
+
+.answer:active{
+	background-color: #fc008e;
 }
